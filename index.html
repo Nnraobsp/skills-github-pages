@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mineral Processing Diagnostic Test</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f3f5f7;
+    color:#222;
+}
+
+.header{
+    background:#17365d;
+    color:white;
+    padding:18px 25px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.10);
+    margin-bottom:20px;
+}
+
+h1{
+    color:#17365d;
+}
+
+h2{
+    color:#17365d;
+}
+
+.instructions{
+    background:#eef4fb;
+    border-left:5px solid #17365d;
+    padding:18px;
+    line-height:1.6;
+    border-radius:7px;
+}
+
+input[type="text"]{
+    width:100%;
+    padding:14px;
+    margin:8px 0 18px;
+    border:1px solid #ccc;
+    border-radius:7px;
+    font-size:16px;
+}
+
+button{
+    border:none;
+    padding:14px 22px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.start{
+    width:100%;
+    background:#17365d;
+    color:white;
+}
+
+.next{
+    background:#17365d;
+    color:white;
+}
+
+.previous{
+    background:#e5e7eb;
+    color:#222;
+}
+
+.submit{
+    width:100%;
+    background:#188038;
+    color:white;
+    margin-top:20px;
+}
+
+.hidden{
+    display:none;
+}
+
+.timer{
+    position:sticky;
+    top:10px;
+    z-index:20;
+    background:white;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+    font-size:21px;
+    font-weight:bold;
+    color:#17365d;
+    box-shadow:0 3px 12px rgba(0,0,0,.15);
+    margin-bottom:20px;
+}
+
+.timer.warning{
+    color:#d93025;
+}
+
+.progress{
+    height:10px;
+    background:#ddd;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress-bar{
+    height:100%;
+    background:#17365d;
+    width:0%;
+}
+
+.question-number{
+    color:#777;
+    font-size:14px;
+    margin-bottom:12px;
+}
+
+.question{
+    font-size:20px;
+    font-weight:bold;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.option{
+    display:block;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:8px;
+    margin-bottom:10px;
+    cursor:pointer;
+}
+
+.option:hover{
+    background:#f3f6fa;
+}
+
+.option.selected{
+    background:#eaf1f8;
+    border-color:#17365d;
+    font-weight:bold;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.score{
+    text-align:center;
+    background:#eef4fb;
+    padding:30px;
+    border-radius:12px;
+}
+
+.score-number{
+    font-size:55px;
+    font-weight:bold;
+    color:#17365d;
+}
+
+.percentage{
+    font-size:26px;
+    font-weight:bold;
+}
+
+.result{
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:18px;
+    border-left:6px solid;
+}
+
+.correct{
+    background:#edf7ed;
+    border-color:#188038;
+}
+
+.incorrect{
+    background:#fff1f0;
+    border-color:#d93025;
+}
+
+.result-question{
+    font-size:17px;
+    font-weight:bold;
+    line-height:1.5;
+}
+
+.answer{
+    margin-top:12px;
+    line-height:1.5;
+}
+
+.explanation{
+    margin-top:15px;
+    padding:15px;
+    background:white;
+    border-radius:8px;
+    line-height:1.6;
+    white-space:pre-line;
+}
+
+.level{
+    background:#f5f5f5;
+    padding:20px;
+    border-radius:10px;
+    margin-top:20px;
+    line-height:1.6;
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:10px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .question{
+        font-size:18px;
+    }
+
+    .navigation{
+        flex-direction:column;
+    }
+
+    .navigation button{
+        width:100%;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="header">
+    SAIL / MTI — Training Diagnostic
+</div>
+
+
+<div class="container">
+
+
+<!-- INTRODUCTION -->
+
+<div id="intro" class="card">
+
+<h1>
+Mineral Processing & Comminution
+</h1>
+
+<p>
+<strong>Diagnostic Pre-Test</strong>
+</p>
+
+<div class="instructions">
+
+<strong>Purpose</strong>
+
+<p>
+This diagnostic test is designed to understand your
+present level of understanding before the training.
+</p>
+
+<strong>Instructions</strong>
+
+<ul>
+
+<li>Duration: <strong>15 minutes</strong></li>
+
+<li>Total questions: <strong>12</strong></li>
+
+<li>Calculator is allowed.</li>
+
+<li>Correct answers remain hidden during the test.</li>
+
+<li>After submission, score, correct answers
+and explanations will be displayed.</li>
+
+</ul>
+
+</div>
+
+
+<br>
+
+<label>
+<strong>Participant Name *</strong>
+</label>
+
+<input
+type="text"
+id="studentName"
+placeholder="Enter your full name"
+>
+
+
+<label>
+<strong>Employee / Participant ID</strong>
+</label>
+
+<input
+type="text"
+id="employeeId"
+placeholder="Enter employee ID"
+>
+
+
+<button
+class="start"
+onclick="startTest()"
+>
+
+START TEST
+
+</button>
+
+</div>
+
+
+
+<!-- TEST -->
+
+<div id="test" class="hidden">
+
+<div id="timer" class="timer">
+Time remaining: 15:00
+</div>
+
+
+<div class="card">
+
+<div id="progressText">
+Question 1 of 12
+</div>
+
+<div class="progress">
+
+<div
+id="progressBar"
+class="progress-bar">
+</div>
+
+</div>
+
+</div>
+
+
+<div id="questionArea"></div>
+
+
+<div class="card">
+
+<div class="navigation">
+
+<button
+id="previousButton"
+class="previous"
+onclick="previousQuestion()"
+>
+
+← Previous
+
+</button>
+
+
+<button
+id="nextButton"
+class="next"
+onclick="nextQuestion()"
+>
+
+Next →
+
+</button>
+
+</div>
+
+
+<button
+id="submitButton"
+class="submit hidden"
+onclick="submitTest()"
+>
+
+SUBMIT TEST
+
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- RESULTS -->
+
+<div id="results" class="hidden">
+
+<div class="card">
+
+<h1>
+Test Completed
+</h1>
+
+<div id="scoreArea"></div>
+
+<h2>
+Question-wise Results
+</h2>
+
+<div id="questionResults"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+/*******************************************************
+ QUESTION BANK
+*******************************************************/
+
+const questions = [
+
+{
+id:1,
+
+question:
+"An iron-ore sample contains 100 tonnes of ore at 40% Fe. How much Fe is contained in the ore?",
+
+options:[
+"40 tonnes",
+"60 tonnes",
+"100 tonnes",
+"Cannot be determined"
+],
+
+answer:0,
+
+explanation:
+"Fe contained = Ore quantity × Fe grade\n" +
+"= 100 × 0.40\n" +
+"= 40 tonnes Fe."
+},
+
+
+{
+id:2,
+
+question:
+"A plant receives 1,000 tonnes of ore at 35% Fe and produces 500 tonnes of concentrate at 65% Fe. What happened to the Fe grade?",
+
+options:[
+"It decreased",
+"It remained the same",
+"It increased",
+"Fe was completely removed"
+],
+
+answer:2,
+
+explanation:
+"The Fe grade increased from 35% to 65%.\n\n" +
+"Beneficiation increases the concentration of the valuable mineral and reduces unwanted gangue."
+},
+
+
+{
+id:3,
+
+question:
+"An ore contains 25% Fe. If you have 200 tonnes of this ore, how much Fe is present?",
+
+options:[
+"25 tonnes",
+"40 tonnes",
+"50 tonnes",
+"75 tonnes"
+],
+
+answer:2,
+
+explanation:
+"Fe = Ore quantity × Fe grade\n" +
+"= 200 × 0.25\n" +
+"= 50 tonnes Fe."
+},
+
+
+{
+id:4,
+
+question:
+"A plant receives 1,000 tonnes/day of ore and produces 600 tonnes/day of concentrate. What is the tailings quantity?",
+
+options:[
+"200 tonnes/day",
+"300 tonnes/day",
+"400 tonnes/day",
+"600 tonnes/day"
+],
+
+answer:2,
+
+explanation:
+"Tailings = Feed − Concentrate\n" +
+"= 1,000 − 600\n" +
+"= 400 tonnes/day."
+},
+
+
+{
+id:5,
+
+question:
+"A plant processes 1,000 tonnes of ore containing 30% Fe and produces 400 tonnes of concentrate containing 65% Fe. How much Fe is contained in the feed?",
+
+options:[
+"200 tonnes",
+"260 tonnes",
+"300 tonnes",
+"400 tonnes"
+],
+
+answer:2,
+
+explanation:
+"Fe in feed = Feed quantity × Feed grade\n" +
+"= 1,000 × 0.30\n" +
+"= 300 tonnes Fe."
+},
+
+
+{
+id:6,
+
+question:
+"Using the same data as Q5, how much Fe is contained in the concentrate?",
+
+options:[
+"200 tonnes",
+"240 tonnes",
+"260 tonnes",
+"300 tonnes"
+],
+
+answer:2,
+
+explanation:
+"Fe in concentrate = Concentrate quantity × Concentrate grade\n" +
+"= 400 × 0.65\n" +
+"= 260 tonnes Fe."
+},
+
+
+{
+id:7,
+
+question:
+"Using Q5 and Q6, calculate Fe recovery.",
+
+options:[
+"75.00%",
+"80.00%",
+"86.67%",
+"92.86%"
+],
+
+answer:2,
+
+explanation:
+"Fe Recovery = (Fe in concentrate / Fe in feed) × 100\n\n" +
+"= (260 / 300) × 100\n\n" +
+"= 86.67%."
+},
+
+
+{
+id:8,
+
+question:
+"A mine produces 10,000 tonnes/day of ROM ore, but only 4,000 tonnes/day becomes concentrate. What is the main reason for rejecting the remaining material?",
+
+options:[
+"To reduce unwanted gangue entering downstream processing",
+"To increase the amount of gangue entering the furnace",
+"To increase transportation requirements",
+"To avoid crushing the ore"
+],
+
+answer:0,
+
+explanation:
+"Beneficiation removes unwanted gangue so that a smaller quantity of higher-grade material is sent to downstream processing."
+},
+
+
+{
+id:9,
+
+question:
+"Valuable Fe minerals are locked with gangue. What would normally be done before attempting efficient physical separation?",
+
+options:[
+"Increase furnace temperature",
+"Crush and grind the ore",
+"Add more tailings",
+"Increase transportation"
+],
+
+answer:1,
+
+explanation:
+"Crushing and grinding reduce particle size and help liberate valuable minerals from gangue."
+},
+
+
+{
+id:10,
+
+question:
+"Plant A has insufficient grinding and 75% recovery. Plant B has very fine grinding, 82% recovery, but very high energy consumption and difficult slime separation. Can you select the better plant based only on recovery?",
+
+options:[
+"Yes, always select Plant B",
+"Yes, always select Plant A",
+"No, recovery alone is not sufficient",
+"Recovery has no relevance"
+],
+
+answer:2,
+
+explanation:
+"Recovery alone is not sufficient to evaluate a plant.\n\n" +
+"Grade, recovery, mass yield, energy consumption, slime generation and economics should also be considered."
+},
+
+
+{
+id:11,
+
+question:
+"A beneficiation plant improves Fe grade from 35% to 65%. Does this automatically prove that the plant is performing well?",
+
+options:[
+"Yes",
+"No",
+"Only if the feed grade was below 20%",
+"Only if the plant produces tailings"
+],
+
+answer:1,
+
+explanation:
+"Grade improvement alone is not sufficient.\n\n" +
+"Plant performance should also consider recovery, mass yield, energy consumption and economics."
+},
+
+
+{
+id:12,
+
+question:
+"In mineral processing, which combination gives a more complete picture of plant performance?",
+
+options:[
+"Grade only",
+"Recovery only",
+"Grade, recovery, mass yield and economics",
+"Ore tonnage only"
+],
+
+answer:2,
+
+explanation:
+"A complete evaluation considers grade, recovery, mass yield and economic factors."
+}
+
+];
+
+
+
+/*******************************************************
+ VARIABLES
+*******************************************************/
+
+let currentQuestion = 0;
+
+let answers = {};
+
+let timeRemaining = 15 * 60;
+
+let timerInterval = null;
+
+let submitted = false;
+
+
+
+/*******************************************************
+ START TEST
+*******************************************************/
+
+function startTest(){
+
+    const name =
+        document
+        .getElementById("studentName")
+        .value
+        .trim();
+
+    if(!name){
+
+        alert(
+            "Please enter your name before starting the test."
+        );
+
+        return;
+    }
+
+
+    document
+    .getElementById("intro")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("test")
+    .classList
+    .remove("hidden");
+
+
+    renderQuestion();
+
+    startTimer();
+
+    window.scrollTo(0,0);
+}
+
+
+
+/*******************************************************
+ RENDER QUESTION
+*******************************************************/
+
+function renderQuestion(){
+
+    const q =
+        questions[currentQuestion];
+
+    const total =
+        questions.length;
+
+
+    document
+    .getElementById("progressText")
+    .innerText =
+        "Question " +
+        (currentQuestion + 1) +
+        " of " +
+        total;
+
+
+    document
+    .getElementById("progressBar")
+    .style
+    .width =
+        ((currentQuestion + 1) / total * 100) + "%";
+
+
+    let html = "";
+
+    html +=
+        '<div class="card">';
+
+
+    html +=
+        '<div class="question-number">' +
+        "QUESTION " +
+        q.id +
+        "</div>";
+
+
+    html +=
+        '<div class="question">' +
+        q.question +
+        "</div>";
+
+
+    for(
+        let i=0;
+        i<q.options.length;
+        i++
+    ){
+
+        const selected =
+            answers[q.id] === i;
+
+
+        html +=
+            '<label class="option ' +
+            (selected ? "selected" : "") +
+            '">';
+
+
+        html +=
+            '<input ' +
+            'type="radio" ' +
+            'name="question" ' +
+            'onclick="selectAnswer(' +
+            q.id +
+            ',' +
+            i +
+            ')" ' +
+            (selected ? "checked" : "") +
+            '>';
+
+
+        html +=
+            q.options[i];
+
+
+        html +=
+            "</label>";
+    }
+
+
+    html +=
+        "</div>";
+
+
+    document
+    .getElementById("questionArea")
+    .innerHTML = html;
+
+
+    document
+    .getElementById("previousButton")
+    .disabled =
+        currentQuestion === 0;
+
+
+    if(
+        currentQuestion ===
+        questions.length - 1
+    ){
+
+        document
+        .getElementById("nextButton")
+        .classList
+        .add("hidden");
+
+
+        document
+        .getElementById("submitButton")
+        .classList
+        .remove("hidden");
+
+    }
+
+    else{
+
+        document
+        .getElementById("nextButton")
+        .classList
+        .remove("hidden");
+
+
+        document
+        .getElementById("submitButton")
+        .classList
+        .add("hidden");
+
+    }
+
+}
+
+
+
+/*******************************************************
+ SELECT ANSWER
+*******************************************************/
+
+function selectAnswer(
+    questionId,
+    option
+){
+
+    answers[questionId] =
+        option;
+
+
+    renderQuestion();
+}
+
+
+
+/*******************************************************
+ NEXT
+*******************************************************/
+
+function nextQuestion(){
+
+    if(
+        currentQuestion <
+        questions.length - 1
+    ){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+        window.scrollTo(0,0);
+    }
+
+}
+
+
+
+/*******************************************************
+ PREVIOUS
+*******************************************************/
+
+function previousQuestion(){
+
+    if(currentQuestion > 0){
+
+        currentQuestion--;
+
+        renderQuestion();
+
+        window.scrollTo(0,0);
+    }
+
+}
+
+
+
+/*******************************************************
+ TIMER
+*******************************************************/
+
+function startTimer(){
+
+    timerInterval =
+        setInterval(
+
+            function(){
+
+                if(submitted){
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+                    return;
+                }
+
+
+                timeRemaining--;
+
+
+                updateTimer();
+
+
+                if(
+                    timeRemaining <= 60
+                ){
+
+                    document
+                    .getElementById("timer")
+                    .classList
+                    .add("warning");
+
+                }
+
+
+                if(
+                    timeRemaining <= 0
+                ){
+
+                    clearInterval(
+                        timerInterval
+                    );
+
+
+                    alert(
+                        "Time is over. The test will now be submitted."
+                    );
+
+
+                    submitTest();
+
+                }
+
+            },
+
+            1000
+        );
+
+}
+
+
+
+/*******************************************************
+ UPDATE TIMER
+*******************************************************/
+
+function updateTimer(){
+
+    const minutes =
+        Math.floor(
+            timeRemaining / 60
+        );
+
+
+    const seconds =
+        timeRemaining % 60;
+
+
+    document
+    .getElementById("timer")
+    .innerText =
+        "Time remaining: " +
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+
+}
+
+
+
+/*******************************************************
+ SUBMIT
+*******************************************************/
+
+function submitTest(){
+
+    if(submitted){
+
+        return;
+    }
+
+
+    const answered =
+        Object.keys(answers).length;
+
+
+    if(
+        answered <
+        questions.length
+    ){
+
+        const confirmSubmit =
+            confirm(
+                "You have answered " +
+                answered +
+                " of " +
+                questions.length +
+                " questions.\n\n" +
+                "Do you want to submit?"
+            );
+
+
+        if(!confirmSubmit){
+
+            return;
+        }
+
+    }
+
+
+    submitted = true;
+
+
+    clearInterval(
+        timerInterval
+    );
+
+
+    calculateResults();
+
+}
+
+
+
+/*******************************************************
+ CALCULATE RESULTS
+*******************************************************/
+
+function calculateResults(){
+
+    let score = 0;
+
+
+    for(
+        let i=0;
+        i<questions.length;
+        i++
+    ){
+
+        const q =
+            questions[i];
+
+
+        if(
+            answers[q.id] ===
+            q.answer
+        ){
+
+            score++;
+
+        }
+
+    }
+
+
+    const percentage =
+        Math.round(
+            score /
+            questions.length *
+            10000
+        ) / 100;
+
+
+    document
+    .getElementById("test")
+    .classList
+    .add("hidden");
+
+
+    document
+    .getElementById("results")
+    .classList
+    .remove("hidden");
+
+
+    showScore(
+        score,
+        percentage
+    );
+
+
+    showQuestionResults();
+
+    window.scrollTo(0,0);
+
+}
+
+
+
+/*******************************************************
+ SHOW SCORE
+*******************************************************/
+
+function showScore(
+    score,
+    percentage
+){
+
+    let level = "";
+
+    let message = "";
+
+
+    if(percentage >= 90){
+
+        level =
+            "Strong Foundation";
+
+        message =
+            "You demonstrate a strong initial understanding of mineral processing fundamentals.";
+
+    }
+
+    else if(percentage >= 75){
+
+        level =
+            "Good Foundation";
+
+        message =
+            "You have a good understanding of the basic concepts.";
+
+    }
+
+    else if(percentage >= 50){
+
+        level =
+            "Developing Foundation";
+
+        message =
+            "Several basic concepts are understood, but some relationships require reinforcement.";
+
+    }
+
+    else{
+
+        level =
+            "Foundation Building";
+
+        message =
+            "Several fundamental concepts can be strengthened during the training.";
+
+    }
+
+
+    const name =
+        document
+        .getElementById("studentName")
+        .value;
+
+
+    let html = "";
+
+
+    html +=
+        '<div class="score">';
+
+
+    html +=
+        "<h2>Your Score</h2>";
+
+
+    html +=
+        '<div class="score-number">' +
+        score +
+        " / " +
+        questions.length +
+        "</div>";
+
+
+    html +=
+        '<div class="percentage">' +
+        percentage +
+        "%" +
+        "</div>";
+
+
+    html +=
+        "<br>";
+
+
+    html +=
+        "<strong>" +
+        name +
+        "</strong>";
+
+
+    html +=
+        "</div>";
+
+
+    html +=
+        '<div class="level">';
+
+
+    html +=
+        "<h2>" +
+        level +
+        "</h2>";
+
+
+    html +=
+        "<p>" +
+        message +
+        "</p>";
+
+
+    html +=
+        "<strong>Training focus:</strong>";
+
+
+    html +=
+        "<p>" +
+        "Grade, recovery, mass balance, liberation, " +
+        "comminution and beneficiation fundamentals." +
+        "</p>";
+
+
+    html +=
+        "</div>";
+
+
+    document
+    .getElementById("scoreArea")
+    .innerHTML = html;
+
+}
+
+
+
+/*******************************************************
+ SHOW QUESTION RESULTS
+*******************************************************/
+
+function showQuestionResults(){
+
+    let html = "";
+
+
+    for(
+        let i=0;
+        i<questions.length;
+        i++
+    ){
+
+        const q =
+            questions[i];
+
+
+        const selected =
+            answers[q.id];
+
+
+        const correct =
+            selected === q.answer;
+
+
+        html +=
+            '<div class="result ' +
+            (correct ?
+                "correct" :
+                "incorrect") +
+            '">';
+
+
+        html +=
+            '<div class="result-question">';
+
+
+        html +=
+            (correct ? "✓ " : "✗ ");
+
+
+        html +=
+            "Q" +
+            q.id +
+            ". " +
+            q.question;
+
+
+        html +=
+            "</div>";
+
+
+        html +=
+            '<div class="answer">';
+
+
+        html +=
+            "<strong>Your answer:</strong><br>";
+
+
+        if(
+            selected === undefined
+        ){
+
+            html +=
+                "Not answered";
+
+        }
+
+        else{
+
+            html +=
+                q.options[selected];
+
+        }
+
+
+        html +=
+            "</div>";
+
+
+        html +=
+            '<div class="answer">';
+
+
+        html +=
+            "<strong>Correct answer:</strong><br>";
+
+
+        html +=
+            q.options[q.answer];
+
+
+        html +=
+            "</div>";
+
+
+        html +=
+            '<div class="explanation">';
+
+
+        html +=
+            "<strong>Explanation</strong><br><br>";
+
+
+        html +=
+            q.explanation;
+
+
+        html +=
+            "</div>";
+
+
+        html +=
+            "</div>";
+
+    }
+
+
+    document
+    .getElementById("questionResults")
+    .innerHTML =
+        html;
+
+}
+
+</script>
+
+</body>
+</html>
